@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net48</TargetFramework>
+        <RootNamespace>Player3Tower</RootNamespace>
+        <Configurations>Debug;Release</Configurations>
+        <Nullable>enable</Nullable>
+        <AssemblyName>Player3Tower</AssemblyName>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+    
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <Optimize>False</Optimize>
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+        <Optimize>True</Optimize>
+        <DebugType>none</DebugType>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove="Assets\000-BananaFarm.png" />
+      <None Remove="Assets\000-Sniper.png" />
+      <None Remove="Assets\1-PatFusty.png" />
+      <None Remove="Assets\1-Quincy.png" />
+      <None Remove="Assets\300-BananaFarm - Copy.png" />
+      <None Remove="Assets\320-Ninja.png" />
+      <None Remove="Assets\500-BananaFarm.png" />
+      <None Remove="Assets\BananaDisplay.png" />
+      <None Remove="Assets\BananaFactory-Icon.png" />
+      <None Remove="Assets\BananaForests-Icon.png" />
+      <None Remove="Assets\BetterRevenue-Icon.png" />
+      <None Remove="Assets\BiggerBox-Icon.png" />
+      <None Remove="Assets\Farmer-Icon.png" />
+      <None Remove="Assets\FasterTilling-Icon.png" />
+      <None Remove="Assets\GoldenEmperor-Icon.png" />
+      <None Remove="Assets\HeatTippedBananas-Icon.png" />
+      <None Remove="Assets\HeavyBananas-Icon.png" />
+      <None Remove="Assets\LaserReactorCore-Icon.png" />
+      <None Remove="Assets\player3-Icon.png" />
+      <None Remove="Assets\player3-Portrait.png" />
+      <None Remove="Assets\QuadExoAlpha-Icon.png" />
+      <None Remove="Assets\QuadSuit-Icon.png" />
+      <None Remove="Assets\SpikyBananas-Icon.png" />
+    </ItemGroup>
+
+    <Import Project="..\btd6.targets" />
+</Project>
