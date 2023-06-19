@@ -2,7 +2,8 @@ namespace Player3Tower;
 
 public static class ModHelperData
 {
-    public const string Version = "1.0.0";
+    public const string WorksOnVersion = "37";
+    public const string Version = "1.0.1";
     public const string Name = "Player3Tower";
 
     public const string Description = "Adds player 3 as a tower into the game";
