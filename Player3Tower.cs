@@ -1,13 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Models.Towers;
-using Assets.Scripts.Models.Towers.Behaviors;
-using Assets.Scripts.Models.Towers.Behaviors.Emissions;
-using Assets.Scripts.Models.Towers.Filters;
-using Assets.Scripts.Models.Towers.Projectiles.Behaviors;
-using Assets.Scripts.Models.TowerSets;
-using Assets.Scripts.Unity;
-using Assets.Scripts.Unity.Display;
 using BTD_Mod_Helper;
 using BTD_Mod_Helper.Api.Display;
 using BTD_Mod_Helper.Api.Enums;
@@ -18,30 +10,35 @@ using MelonLoader;
 using weapondisplays;
 using Player3.Displays;
 using playerthree;
-using UnhollowerBaseLib;
 using UnityEngine;
 using System;
 using Object = UnityEngine.Object;
 using Action = System.Action;
-using Assets.Scripts.Simulation.Towers.Projectiles.Behaviors;
 using bananafarmfake;
-using Assets.Scripts.Data.Cosmetics.BloonPopFXs;
-using Assets.Scripts.Models.Towers.Projectiles;
 using Il2CppSystem.Runtime.ConstrainedExecution;
 using RandomTowers;
-using Assets.Scripts.Simulation.SMath;
 using Il2CppSystem;
 using Il2CppSystem.Diagnostics.Tracing;
 using Il2CppSystem.ComponentModel;
 using UnityEngine.Assertions.Comparers;
 using Bomb;
-using Assets.Scripts.Models.Towers.Behaviors.Attack;
-using Assets.Scripts.Models.Towers.Behaviors.Attack.Behaviors;
-using Assets.Scripts.Unity.Towers.Behaviors.Attack.Behaviors;
-using Assets.Scripts.Models.Towers.Behaviors.Abilities.Behaviors;
-using Assets.Scripts.Models.Towers.Behaviors.Abilities;
+using TemplateMod.MinionMonkey.Displays.Projectiles;
+using System.Text;
+using System.Threading.Tasks;
+using TimeTraveler.Displays.Projectiles;
+using Il2CppAssets.Scripts.Models.Towers;
+using Il2CppAssets.Scripts.Models.Towers.Behaviors;
+using Il2CppAssets.Scripts.Models.Towers.Projectiles.Behaviors;
+using Il2CppAssets.Scripts.Models.TowerSets;
+using Il2CppAssets.Scripts.Unity;
+using Il2CppAssets.Scripts.Unity.Display;
+using Il2CppAssets.Scripts.Models.Towers.Behaviors.Attack;
+using Il2CppAssets.Scripts.Models.Towers.Behaviors.Emissions;
+using Il2CppAssets.Scripts.Simulation.Towers;
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
+using Il2Cpp;
+using Il2CppAssets.Scripts.Models.Towers.Behaviors.Abilities;
 
-[assembly: MelonInfo(typeof(Player3Tower.Player3Tower), "Player_3_be_like", "1.0.0", "Commander__Cat")]
 [assembly: MelonGame("Ninja Kiwi", "BloonsTD6")]
 
 namespace Player3Tower
@@ -234,7 +231,7 @@ namespace playerthree
     public class player3 : ModTower
     {
 
-        public override string TowerSet => TowerSetType.Magic;
+        public override TowerSet TowerSet => TowerSet.Magic;
         public override string BaseTower => TowerType.DartMonkey;
         public override int Cost => 850;
 
@@ -249,7 +246,7 @@ namespace playerthree
             var attackModel = towerModel.GetAttackModel();
             var projectile = attackModel.weapons[0].projectile;
             attackModel.range = 75;
-            attackModel.weapons[0].projectile.ApplyDisplay<BananaDisplay>();
+            attackModel.weapons[0].projectile.ApplyDisplay<weapondisplays.BananaDisplay>();
             projectile.GetDamageModel().immuneBloonProperties = BloonProperties.Lead;
         }
         public override int GetTowerIndex(List<TowerDetailsModel> towerSet)
@@ -276,7 +273,7 @@ namespace playerthreeupgrades
             farm.name = "Farm_Weapon";
             farm.weapons[0].Rate = 15f;
             farm.weapons[0].projectile.RemoveBehavior<CreateTowerModel>();
-            farm.weapons[0].projectile.ApplyDisplay<BananaDisplay>();
+            farm.weapons[0].projectile.ApplyDisplay<weapondisplays.BananaDisplay>();
             farm.weapons[0].projectile.AddBehavior(new CreateTowerModel("BananaFarm000place", GetTowerModel<BananaFarmer000Farm>().Duplicate(), 0f, true, false, false, true, true));
             towerModel.AddBehavior(farm);
             var projectile = attackModel.weapons[0].projectile;
@@ -296,7 +293,7 @@ namespace playerthreeupgrades
         {
             var attackModel = towerModel.GetAttackModel();
             var projectile = attackModel.weapons[0].projectile;
-            attackModel.weapons[0].projectile.ApplyDisplay<BananaDisplay>();
+            attackModel.weapons[0].projectile.ApplyDisplay<weapondisplays.BananaDisplay>();
             foreach (var attacks in towerModel.GetAttackModels())
             {
                 if (attacks.name.Contains("Farm"))
@@ -421,7 +418,7 @@ namespace playerthreeupgrades
             towerninja.name = "Ninja_Tower";
             towerninja.weapons[0].Rate = 15f;
             towerninja.weapons[0].projectile.RemoveBehavior<CreateTowerModel>();
-            towerninja.weapons[0].projectile.ApplyDisplay<BananaDisplay>();
+            towerninja.weapons[0].projectile.ApplyDisplay<weapondisplays.BananaDisplay>();
             towerninja.weapons[0].projectile.AddBehavior(new CreateTowerModel("Ninja320place", GetTowerModel<Ninja320>().Duplicate(), 0f, true, false, false, true, true));
             towerModel.AddBehavior(towerninja);
             var towersniper = Game.instance.model.GetTowerFromId("EngineerMonkey-200").GetAttackModel().Duplicate();
@@ -429,7 +426,7 @@ namespace playerthreeupgrades
             towersniper.name = "Sniper_Tower";
             towersniper.weapons[0].Rate = 4.5f;
             towersniper.weapons[0].projectile.RemoveBehavior<CreateTowerModel>();
-            towersniper.weapons[0].projectile.ApplyDisplay<BananaDisplay>();
+            towersniper.weapons[0].projectile.ApplyDisplay<weapondisplays.BananaDisplay>();
             towersniper.weapons[0].projectile.AddBehavior(new CreateTowerModel("Sniperplace", GetTowerModel<Sniper000>().Duplicate(), 0f, true, false, false, true, true));
             towerModel.AddBehavior(towersniper);
             var towerquincy = Game.instance.model.GetTowerFromId("EngineerMonkey-200").GetAttackModel().Duplicate();
@@ -437,7 +434,7 @@ namespace playerthreeupgrades
             towerquincy.name = "Quincy_Tower";
             towerquincy.weapons[0].Rate = 12f;
             towerquincy.weapons[0].projectile.RemoveBehavior<CreateTowerModel>();
-            towerquincy.weapons[0].projectile.ApplyDisplay<BananaDisplay>();
+            towerquincy.weapons[0].projectile.ApplyDisplay<weapondisplays.BananaDisplay>();
             towerquincy.weapons[0].projectile.AddBehavior(new CreateTowerModel("Quincyplace", GetTowerModel<Quincy>().Duplicate(), 0f, true, false, false, true, true));
             towerModel.AddBehavior(towerquincy);
 
@@ -467,7 +464,7 @@ namespace playerthreeupgrades
             towerpat.name = "Pat_Tower";
             towerpat.weapons[0].Rate = 12f;
             towerpat.weapons[0].projectile.RemoveBehavior<CreateTowerModel>();
-            towerpat.weapons[0].projectile.ApplyDisplay<BananaDisplay>();
+            towerpat.weapons[0].projectile.ApplyDisplay<weapondisplays.BananaDisplay>();
             towerpat.weapons[0].projectile.AddBehavior(new CreateTowerModel("Patplace", GetTowerModel<PatFusty>().Duplicate(), 0f, true, false, false, true, true));
             towerModel.AddBehavior(towerpat);
         }
@@ -598,7 +595,7 @@ namespace bananafarmfake
     {
         public override string Portrait => "000-BananaFarm";
         public override string Name => "Banana Farm";
-        public override string TowerSet => TowerSetType.Support;
+        public override TowerSet TowerSet => TowerSet.Support;
         public override string BaseTower => TowerType.BananaFarm;
 
         public override bool DontAddToShop => true;
@@ -637,7 +634,7 @@ namespace bananafarmfake
     {
         public override string Portrait => "000-BananaFarm";
         public override string Name => "Banana Farm 1-2-0";
-        public override string TowerSet => TowerSetType.Support;
+        public override TowerSet TowerSet => TowerSet.Support;
         public override string BaseTower => "BananaFarm-120";
 
         public override bool DontAddToShop => true;
@@ -676,7 +673,7 @@ namespace bananafarmfake
     {
         public override string Portrait => "300-BananaFarm";
         public override string Name => "Banana Farm 3-2-0";
-        public override string TowerSet => TowerSetType.Support;
+        public override TowerSet TowerSet => TowerSet.Support;
         public override string BaseTower => "BananaFarm-320";
 
         public override bool DontAddToShop => true;
@@ -715,7 +712,7 @@ namespace bananafarmfake
     {
         public override string Portrait => "500-BananaFarm";
         public override string Name => "Banana Farm 5-0-0";
-        public override string TowerSet => TowerSetType.Support;
+        public override TowerSet TowerSet => TowerSet.Support;
         public override string BaseTower => "BananaFarm-500";
 
         public override bool DontAddToShop => true;
@@ -757,7 +754,7 @@ namespace RandomTowers
     {
         public override string Portrait => "320-Ninja";
         public override string Name => "320 Ninja";
-        public override string TowerSet => TowerSetType.Support;
+        public override TowerSet TowerSet => TowerSet.Support;
         public override string BaseTower => "NinjaMonkey-320";
 
         public override bool DontAddToShop => true;
@@ -796,7 +793,7 @@ namespace RandomTowers
     {
         public override string Portrait => "000-Sniper";
         public override string Name => "000 Sniper";
-        public override string TowerSet => TowerSetType.Support;
+        public override TowerSet TowerSet => TowerSet.Support;
         public override string BaseTower => TowerType.SniperMonkey;
 
         public override bool DontAddToShop => true;
@@ -835,7 +832,7 @@ namespace RandomTowers
     {
         public override string Portrait => "1-Quincy";
         public override string Name => "1 Quincy";
-        public override string TowerSet => TowerSetType.Support;
+        public override TowerSet TowerSet => TowerSet.Support;
         public override string BaseTower => TowerType.Quincy;
 
         public override bool DontAddToShop => true;
@@ -874,7 +871,7 @@ namespace RandomTowers
     {
         public override string Portrait => "1-PatFusty";
         public override string Name => "1 PatFusty";
-        public override string TowerSet => TowerSetType.Support;
+        public override TowerSet TowerSet => TowerSet.Support;
         public override string BaseTower => TowerType.PatFusty;
 
         public override bool DontAddToShop => true;
@@ -913,7 +910,7 @@ namespace RandomTowers
     {
         public override string Portrait => "1-PatFusty";
         public override string Name => "14 PatFusty";
-        public override string TowerSet => TowerSetType.Support;
+        public override TowerSet TowerSet => TowerSet.Support;
         public override string BaseTower => "PatFusty 14";
 
         public override bool DontAddToShop => true;
@@ -952,7 +949,7 @@ namespace RandomTowers
     {
         public override string Portrait => "1-Quincy";
         public override string Name => "14 Quincy";
-        public override string TowerSet => TowerSetType.Support;
+        public override TowerSet TowerSet => TowerSet.Support;
         public override string BaseTower => "Quincy 14";
 
         public override bool DontAddToShop => true;
@@ -991,7 +988,7 @@ namespace RandomTowers
     {
         public override string Portrait => "000-Sniper";
         public override string Name => "005 Sniper";
-        public override string TowerSet => TowerSetType.Support;
+        public override TowerSet TowerSet => TowerSet.Support;
         public override string BaseTower => "SniperMonkey-005";
 
         public override bool DontAddToShop => true;
@@ -1030,7 +1027,7 @@ namespace RandomTowers
     {
         public override string Portrait => "320-Ninja";
         public override string Name => "520 Ninja";
-        public override string TowerSet => TowerSetType.Support;
+        public override TowerSet TowerSet => TowerSet.Support;
         public override string BaseTower => "NinjaMonkey-520";
 
         public override bool DontAddToShop => true;
@@ -1072,7 +1069,7 @@ namespace Bomb
     {
         public override string Portrait => "1-Quincy";
         public override string Name => "Q.U.A.D Drone";
-        public override string TowerSet => TowerSetType.Support;
+        public override TowerSet TowerSet => TowerSet.Support;
         public override string BaseTower => TowerType.SentryParagon;
 
         public override bool DontAddToShop => true;

@@ -1,14 +1,29 @@
 ﻿using System;
 using System.Linq;
-using Assets.Scripts.Models.Towers;
-using Assets.Scripts.Unity.Display;
 using BTD_Mod_Helper.Api.Display;
 using BTD_Mod_Helper.Extensions;
 using Player3Tower;
 using playerthree;
-using UnhollowerBaseLib;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using BTD_Mod_Helper;
+using BTD_Mod_Helper.Api.Enums;
+using BTD_Mod_Helper.Api.Towers;
+using MelonLoader;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using TimeTraveler.Displays.Projectiles;
+using Il2CppAssets.Scripts.Models.Towers;
+using Il2CppAssets.Scripts.Models.Towers.Behaviors;
+using Il2CppAssets.Scripts.Models.Towers.Projectiles.Behaviors;
+using Il2CppAssets.Scripts.Models.TowerSets;
+using Il2CppAssets.Scripts.Unity;
+using Il2CppAssets.Scripts.Unity.Display;
+using Il2CppAssets.Scripts.Models.Towers.Behaviors.Attack;
+using Il2CppAssets.Scripts.Models.Towers.Behaviors.Emissions;
+using Il2CppAssets.Scripts.Simulation.Towers;
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
 
 namespace Player3.Displays;
 
